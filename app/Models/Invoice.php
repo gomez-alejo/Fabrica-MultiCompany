@@ -21,13 +21,13 @@ class Invoice extends Model
     }
 
     // Relación con producto
-    public function product()
+    public function products()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsToMany(Product::class, 'product_id');
     }
 
     // Usuario que creó la factura
-    public function user()
+    public function person()
     {
         return $this->belongsTo(User::class, 'user_id');
     }

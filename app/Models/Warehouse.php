@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Warehouse extends Model
 {
-    public function requestProducts() {
-        return $this->hasMany( Request_Product::class);
+    public function Products() {
+        return $this->belongsToMany( Request_Product::class);
     }
     public function company()  {
         return $this->belongsTo(Company::class);
@@ -15,7 +15,7 @@ class Warehouse extends Model
     public function stocks()  {
         return $this->hasMany(Stock::class);
     }
-    public function productInvoices()  {
-        return $this->hasMany(product_invoice::class);
+    public function Invoices()  {
+        return $this->belongsToMany(product_invoice::class);
     }
 }

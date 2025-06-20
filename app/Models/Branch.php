@@ -15,8 +15,8 @@ class Branch extends Model
     }
 
     // Relación con requests (solicitudes)
-    public function requests()
+    public function invioces()
     {
-        return $this->hasMany(Request::class, 'branch_id');
+        return $this->hasMany(Invoice::class, 'branch_id');
     }
 }
