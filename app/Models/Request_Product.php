@@ -18,4 +18,5 @@ class Request_Product extends Model
     public function warehouse() {
         return $this->benlongsTo(Warehouse::class);
     }
+    
 }
