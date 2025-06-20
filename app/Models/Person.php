@@ -6,5 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
 {
-    //
+    protected $table = 'people';
+
+    // Relación con la empresa
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    // Relación con supplier (si esta persona es un proveedor)
+    public function supplier()
+    {
+        return $this->hasOne(Supplier::class, 'person_id');
+    }
 }
+
