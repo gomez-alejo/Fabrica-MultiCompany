@@ -4,14 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRequestProductTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('request__product', function (Blueprint $table) {
+        Schema::create('product_request', function (Blueprint $table) {
             $table->id(); 
 
             $table->unsignedBigInteger('request_id');   // id_solicitud
@@ -36,6 +36,6 @@ class CreateRequestProductTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('request_product');
+        Schema::dropIfExists('product_request');
     }
-}
+};

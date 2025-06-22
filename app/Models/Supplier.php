@@ -14,9 +14,9 @@ class Supplier extends Model
     public function company() {
         return $this->belongsTo(Company::class);
     }
- 
-     public function person() {
+
+    public function person() {
         return $this->benlongsTo(Person::class);
     }
- 
+
 } 

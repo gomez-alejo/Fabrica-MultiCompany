@@ -6,30 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
-    protected $table = 'invoices';
 
     // Relación con empresa
     public function company()
     {
-        return $this->belongsTo(Company::class, 'company_id');
+        return $this->belongsTo(Company::class);
     }
 
-    // Relación con proveedor
-    public function supplier()
+    public function branches()
     {
-        return $this->belongsTo(Supplier::class, 'supplier_id');
+        return $this->belongsTo(Branch::class);
     }
 
     // Relación con producto
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_id');
+        return $this->belongsToMany(Product::class);
     }
 
     // Usuario que creó la factura
     public function person()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }
 

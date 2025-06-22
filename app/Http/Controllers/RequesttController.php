@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\product_invoice;
+use App\Models\Requestt;
 use Illuminate\Http\Request;
 
-class ProductInvoiceController extends Controller
+class RequesttController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class ProductInvoiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(product_invoice $product_invoice)
+    public function show(Request $request)
     {
         //
     }
@@ -42,7 +42,7 @@ class ProductInvoiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(product_invoice $product_invoice)
+    public function edit(Request $request)
     {
         //
     }
@@ -50,7 +50,7 @@ class ProductInvoiceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, product_invoice $product_invoice)
+    public function update(Request $request, Requestt $requestt)
     {
         //
     }
@@ -58,7 +58,7 @@ class ProductInvoiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(product_invoice $product_invoice)
+    public function destroy(Request $request)
     {
         //
     }

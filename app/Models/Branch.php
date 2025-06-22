@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Branch extends Model
 {
-    protected $table = 'branches';
 
     // Relación con empresa
     public function company()
@@ -15,7 +14,7 @@ class Branch extends Model
     }
 
     // Relación con requests (solicitudes)
-    public function invioces()
+    public function invoices()
     {
         return $this->hasMany(Invoice::class, 'branch_id');
     }

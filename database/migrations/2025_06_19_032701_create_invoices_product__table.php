@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductInvoicesTable extends Migration
+return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('product_invoices', function (Blueprint $table) {
+        Schema::create('invoice_product', function (Blueprint $table) {
             $table->id(); // id (clave primaria)
 
             $table->unsignedBigInteger('invoice_id');     // id_factura
@@ -30,6 +30,6 @@ class CreateProductInvoicesTable extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('product_invoices');
+        Schema::dropIfExists('invoice_product');
     }
-}
+};

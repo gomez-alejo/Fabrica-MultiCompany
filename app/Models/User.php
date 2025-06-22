@@ -10,10 +10,9 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     public function requests() {
-        return $this->hasMany(Request::class);
-     }
-
-     public function company() {
+        return $this->hasMany(Requestt::class);
+    }
+    public function companies() {
         return $this->benlongsTo(Company::class);
     }
 }

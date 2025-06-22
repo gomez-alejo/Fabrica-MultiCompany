@@ -6,26 +6,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
 {
-    protected $table = 'people';
+
 
     // Relación con la empresa
     public function company()
     {
-        return $this->belongsTo(Company::class, 'company_id');
+        return $this->belongsTo(Company::class);
     }
 
     // Relación con supplier (si esta persona es un proveedor)
-    public function supplier()
+    public function suppliers()
     {
-        return $this->hasMany(Supplier::class, 'person_id');
+        return $this->hasMany(Supplier::class);
     }
 
-    public function invioces()  {
+    public function invoices()  {
         return $this->hasMany(Invoice::class);
     }
 
-    public function request()  {
-        return $this->hasMany(Request::class);
+    public function requests()  {
+        return $this->hasMany(Requestt::class);
     }
 }
 
