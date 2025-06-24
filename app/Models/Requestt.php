@@ -1,25 +1,39 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Requestt extends Model
 {
-    // Relación con empresa, muchas solicitudes pueden pertenecer a una misma empresa
-    public function company(){
+    use HasFactory;
+
+    protected $fillable = [
+        'company_id',
+        'user_id',
+        'person_id',
+        'status',
+        'products_json',
+    ];
+
+    public function company()
+    {
         return $this->belongsTo(Company::class);
     }
-    // Relación con usuario que creó la solicitud
-    public function user(){
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-    public function person(){
+
+    public function person()
+    {
         return $this->belongsTo(Person::class);
     }
-    public function productRequest(){
+
+    public function productRequest()
+    {
         return $this->hasMany(ProductRequest::class);
     }
 }
-
-
-
