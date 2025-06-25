@@ -19,38 +19,38 @@ class Company extends Model
    ];
 
    public function invoices() {
-      $this->hasMany(Invoice::class); 
+      return $this->hasMany(Invoice::class); 
    }
 
    public function branches() {
-   $this->hasMany(Branch::class); 
+      return $this->hasMany(Branch::class); 
    }
 
    public function suppliers() {
-      $this->hasMany(Supplier::class); 
+      return $this->hasMany(Supplier::class); 
    }
 
    public function people() {
-      $this->hasMany(Person::class); 
+      return $this->hasMany(Person::class); 
    }
 
    public function requests() {
-      $this->hasMany(Requestt::class); 
+      return $this->hasMany(Requestt::class); 
    }
 
    public function warehouses() {
-      $this->hasMany(Warehouse::class); 
+      return $this->hasMany(Warehouse::class); 
    }
 
    public function products() {
-      $this->hasMany(Product::class); 
+      return $this->hasMany(Product::class); 
    }
 
    public function stocks() {
-      $this->hasMany(Stock::class); 
+      return $this->hasMany(Stock::class); 
    }
 
    public function users() {
-      $this->hasMany(User::class); 
+      return $this->hasMany(User::class); 
    }
 } 

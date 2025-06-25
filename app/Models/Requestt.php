@@ -19,6 +19,10 @@ class Requestt extends Model
         'products_json',
     ];
 
+    protected $casts = [
+        'products_json' => 'array',
+    ];
+
     public function company()
     {
         return $this->belongsTo(Company::class);
@@ -34,7 +38,7 @@ class Requestt extends Model
         return $this->belongsTo(Person::class);
     }
 
-    public function productRequest()
+    public function productRequests()
     {
         return $this->hasMany(ProductRequest::class);
     }

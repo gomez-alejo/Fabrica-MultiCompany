@@ -26,7 +26,7 @@ class Invoice extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function branches()
+    public function branch()
     {
         return $this->belongsTo(Branch::class);
     }
@@ -38,6 +38,6 @@ class Invoice extends Model
 
     public function person()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Person::class);
     }
 }
