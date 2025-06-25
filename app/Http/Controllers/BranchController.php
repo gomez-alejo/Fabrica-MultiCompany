@@ -4,62 +4,43 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 class BranchController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function index(Request $request)
     {
-        //
+        $filters = $request->only(['name', 'company_id']);
+        $branches = Branch::include(['company'])
+            ->filter($filters)
+            ->paginate(10);
+
+        $data = [
+            'branches' => $branches,
+            'status' => 200
+        ];
+        return response()->json($data, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function show(Request $request, $id)
     {
-        //
+        $includes = $request->input('include', ['company']); // Incluye 'company' por defecto
+
+        $branch = Branch::query()
+            ->include($includes)
+            ->find($id);
+
+        if (!$branch) {
+            return response()->json([
+                'message' => 'Branch not found',
+                'status' => 404
+            ], 404);
+        }
+
+        return response()->json([
+            'branch' => $branch,
+            'status' => 200
+        ], 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Branch $branch)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Branch $branch)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Branch $branch)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Branch $branch)
-    {
-        //
-    }
 }
