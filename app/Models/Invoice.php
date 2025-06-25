@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Invoice extends Model
 {
@@ -14,7 +13,12 @@ class Invoice extends Model
         'company_id',
         'branch_id',
         'person_id',
-        // agrega aquí más campos si tu tabla invoices los tiene
+        'user_id',
+        'invoice_number',
+        'created_unix',
+        'payment_method',
+        'total',
+        'iva_total',
     ];
 
     public function company()

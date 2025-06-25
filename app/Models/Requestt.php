@@ -9,6 +9,8 @@ class Requestt extends Model
 {
     use HasFactory;
 
+    protected $table = 'requests';
+
     protected $fillable = [
         'company_id',
         'user_id',

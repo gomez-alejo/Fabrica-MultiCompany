@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    public function run(): void
+public function run(): void
     {
         $this->call([
             CompanySeeder::class,
@@ -17,5 +17,12 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PersonSeeder::class,
             InvoiceProductSeeder::class,
+            SupplierSeeder::class,
+            ProductSeeder::class,
+            InvoiceSeeder::class,
+            RequesttSeeder::class,
+            StockSeeder::class,
+            ProductRequestSeeder::class,
         ]);
     }
+}
