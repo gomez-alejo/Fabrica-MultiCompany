@@ -3,22 +3,46 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
-    public function stocks() {
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'barcode',
+        'description',
+        'category',
+        'unit_price',
+        'iva',
+        'min_stock',
+        'company_id',
+        'supplier_id',
+    ];
+
+    public function stocks()
+    {
         return $this->hasMany(Stock::class);
     }
-    public function invoices()  {
-        return $this->belongsToMany(Invoice::class);
+
+    public function invoiceProducts()
+    {
+        return $this->hasMany(InvoiceProduct::class);
     }
-    public function supplier()  {
+
+    public function supplier()
+    {
         return $this->belongsTo(Supplier::class);
     }
-    public function request()  {
-        return $this->belongsToMany(Requestt::class);
+
+    public function productRequest()
+    {
+        return $this->hasMany(ProductRequest::class);
     }
-    public function company() {
+
+    public function company()
+    {
         return $this->belongsTo(Company::class);
     }
 }

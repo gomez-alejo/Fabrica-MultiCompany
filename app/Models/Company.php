@@ -2,44 +2,55 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    //
-      public function invoices() {
-         $this->hasMany(Invoice::class); 
-      }
+   use HasFactory;
 
-      public function branches() {
-      $this->hasMany(Branch::class); 
-      }
+   protected $fillable = [
+      'name',
+      'nit',
+      'address',
+      'phones',
+      'website',
+      'email',
+   ];
 
-      public function suppliers() {
-         $this->hasMany(Supplier::class); 
-      }
+   public function invoices() {
+      return $this->hasMany(Invoice::class); 
+   }
 
-      public function people() {
-         $this->hasMany(Person::class); 
-      }
+   public function branches() {
+      return $this->hasMany(Branch::class); 
+   }
 
-      public function requests() {
-         $this->hasMany(Requestt::class); 
-      }
+   public function suppliers() {
+      return $this->hasMany(Supplier::class); 
+   }
 
-      public function warehouses() {
-         $this->hasMany(Warehouse::class); 
-      }
+   public function people() {
+      return $this->hasMany(Person::class); 
+   }
 
-      public function products() {
-         $this->hasMany(Product::class); 
-      }
+   public function requests() {
+      return $this->hasMany(Requestt::class); 
+   }
 
-      public function stocks() {
-         $this->hasMany(Stock::class); 
-      }
+   public function warehouses() {
+      return $this->hasMany(Warehouse::class); 
+   }
 
-      public function users() {
-         $this->hasMany(User::class); 
-      }
+   public function products() {
+      return $this->hasMany(Product::class); 
+   }
+
+   public function stocks() {
+      return $this->hasMany(Stock::class); 
+   }
+
+   public function users() {
+      return $this->hasMany(User::class); 
+   }
 } 

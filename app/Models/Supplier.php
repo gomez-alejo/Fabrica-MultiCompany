@@ -3,20 +3,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Supplier extends Model
 {
-    //
-    public function products() {
-        $this->hasMany(Product::class); 
+    use HasFactory;
+
+    protected $fillable = ['company_id', 'person_id', 'business_name', 'nit'];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class); 
     }
 
-    public function company() {
+    public function company()
+    {
         return $this->belongsTo(Company::class);
     }
 
-    public function person() {
-        return $this->benlongsTo(Person::class);
+    public function person()
+    {
+        return $this->belongsTo(Person::class); // corregido "benlongsTo"
     }
-
-} 
+}

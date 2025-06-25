@@ -2,11 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
 {
+    use HasFactory;
 
+    protected $fillable = [
+        'identification',
+        'first_name',
+        'last_name',
+        'phone',
+        'address',
+        'company_id',
+    ];
 
     // Relación con la empresa
     public function company()

@@ -2,32 +2,42 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
+    use HasFactory;
 
-    // Relación con empresa
+    protected $fillable = [
+        'company_id',
+        'branch_id',
+        'person_id',
+        'user_id',
+        'invoice_number',
+        'created_unix',
+        'payment_method',
+        'total',
+        'iva_total',
+    ];
+
     public function company()
     {
         return $this->belongsTo(Company::class);
     }
 
-    public function branches()
+    public function branch()
     {
         return $this->belongsTo(Branch::class);
     }
 
-    // Relación con producto
-    public function products()
+    public function invoiceProducts()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->hasMany(InvoiceProduct::class);
     }
 
-    // Usuario que creó la factura
     public function person()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Person::class);
     }
 }
-
