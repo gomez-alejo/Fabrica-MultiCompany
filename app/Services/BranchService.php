@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-interface Invoice
+interface BranchService
 {
     //
 }

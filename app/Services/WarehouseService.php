@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-interface Supplier
+interface WarehouseService
 {
     //
 }

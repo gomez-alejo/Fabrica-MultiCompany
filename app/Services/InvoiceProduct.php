@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-interface InvoiceProduct
+interface InvoiceProductService
 {
     //
 }

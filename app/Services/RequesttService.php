@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-interface Product
+interface RequesttService
 {
     //
 }
