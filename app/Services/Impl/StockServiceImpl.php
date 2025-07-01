@@ -9,6 +9,6 @@ class StockServiceImpl implements StockService
 {
     public function create(array $data)
     {
-        return Stock::create($data);
+        //return Stock::create($data);
     }
 }

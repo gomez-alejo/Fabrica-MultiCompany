@@ -4,5 +4,5 @@ namespace App\Services;
 
 interface StockService
 {
-    public function create(array $data);
+    //public function create(array $data);
 }

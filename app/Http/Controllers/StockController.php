@@ -16,6 +16,7 @@ public function index()
         $stock = Stock::include()->filter()->get();
         return response()->json($stock);
     }
+    /*
 protected $stockService;
 
     public function __construct(StockService $stockService)
@@ -23,7 +24,7 @@ protected $stockService;
         $this->stockService = $stockService;
     }
 
-    public function create(Request $request)
+    /*public function create(Request $request)
     {
         $request->validate([
             'company_id' => 'required|integer|exists:companies,id',
@@ -38,7 +39,7 @@ protected $stockService;
             'message' => 'Stock creado correctamente',
             'data' => $stock,
         ], 201);
-    }
+    }*/
 
     /**
      * Store a newly created resource in storage.
