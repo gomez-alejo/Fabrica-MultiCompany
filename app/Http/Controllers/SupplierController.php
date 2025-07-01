@@ -2,64 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Supplier;
 use Illuminate\Http\Request;
+use App\Services\SupplierService;
 
 class SupplierController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $supplierService;
+
+    public function __construct(SupplierService $supplierService)
+    {
+        $this->supplierService = $supplierService;
+    }
+
     public function index()
     {
-        //
+        return response()->json($this->supplierService->getAll());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        return response()->json($this->supplierService->create($request->all()), 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Supplier $supplier)
+    public function show($id)
     {
-        //
+        return response()->json($this->supplierService->getById($id));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Supplier $supplier)
+    public function update(Request $request, $id)
     {
-        //
+        return response()->json($this->supplierService->update($id, $request->all()));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Supplier $supplier)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Supplier $supplier)
-    {
-        //
+        $this->supplierService->delete($id);
+        return response()->json(['message' => 'Proveedor eliminado correctamente']);
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Services\Impl\SupplierServiceImpl;
+use App\Services\SupplierService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,7 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        //supplier de proveedores 
+     $this->app->bind(SupplierService::class,  SupplierServiceImpl::class);
     }
 
     /**

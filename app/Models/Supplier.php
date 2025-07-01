@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Supplier extends Model
@@ -11,9 +12,14 @@ class Supplier extends Model
 
     protected $fillable = ['company_id', 'person_id', 'business_name', 'nit'];
 
+    //  Listas blancas
+    protected $allowIncluded = ['company', 'person', 'products'];
+    protected $allowFilter = ['id', 'business_name', 'nit'];
+
+    // Modelo en relaciones
     public function products()
     {
-        return $this->hasMany(Product::class); 
+        return $this->hasMany(Product::class);
     }
 
     public function company()
@@ -23,6 +29,42 @@ class Supplier extends Model
 
     public function person()
     {
-        return $this->belongsTo(Person::class); // corregido "benlongsTo"
+        return $this->belongsTo(Person::class);
+    }
+
+    //  Scope para relaciones incluidas desde query string
+    public function scopeIncluded(Builder $query)
+    {
+        if (empty($this->allowIncluded) || empty(request('included'))) {
+            return;
+        }
+
+        $relations = explode(',', request('included')); // ej: ?included=company,person
+        $allowIncluded = collect($this->allowIncluded);
+
+        foreach ($relations as $key => $relation) {
+            if (!$allowIncluded->contains($relation)) {
+                unset($relations[$key]);
+            }
+        }
+
+        $query->with($relations);
+    }
+
+    //  Scope para filtros desde query string
+    public function scopeFilter(Builder $query)
+    {
+        if (empty($this->allowFilter) || empty(request('filter'))) {
+            return;
+        }
+
+        $filters = request('filter');
+        $allowFilter = collect($this->allowFilter);
+
+        foreach ($filters as $column => $value) {
+            if ($allowFilter->contains($column)) {
+                $query->where($column, 'LIKE', '%' . $value . '%');
+            }
+        }
     }
 }
