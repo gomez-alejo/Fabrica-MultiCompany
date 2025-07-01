@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Services\Impl;
+namespace App\Services\impl;
 
-use App\Services\StockService;
 use App\Models\Stock;
+use App\Services\StockService;
 
 class StockServiceImpl implements StockService
 {
-
+    public function create(array $data)
+    {
+        return Stock::create($data);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Stock;
+use App\Services\StockService;
 use Illuminate\Http\Request;
 
 class StockController extends Controller
@@ -10,17 +11,33 @@ class StockController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+public function index()
     {
-        //
+        $stock = Stock::include()->filter()->get();
+        return response()->json($stock);
+    }
+protected $stockService;
+
+    public function __construct(StockService $stockService)
+    {
+        $this->stockService = $stockService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'company_id' => 'required|integer|exists:companies,id',
+            'warehouse_id' => 'required|integer|exists:warehouses,id',
+            'product_id' => 'required|integer|exists:products,id',
+            'quantity' => 'required|integer|min:0',
+        ]);
+
+        $stock = $this->stockService->create($request->all());
+
+        return response()->json([
+            'message' => 'Stock creado correctamente',
+            'data' => $stock,
+        ], 201);
     }
 
     /**
