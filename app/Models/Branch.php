@@ -27,7 +27,7 @@ class Branch extends Model
         return $this->hasMany(Invoice::class, 'branch_id');
     }
 
-        // Lista blanca de filtros permitidos
+    // Lista blanca de filtros permitidos
     protected static $allowedFilters = ['name', 'company_id'];
 
     // Lista blanca de relaciones permitidas para include[]
