@@ -9,7 +9,7 @@ class InvoiceServiceProductImpl implements InvoiceProductService
 {
     public function all()
     {
-        return InvoiceProduct::with(['invoice', 'product', 'warehouse'])->get();
+        return InvoiceProduct::included()->filter()->get();
     }
 
     public function show($id)
@@ -40,7 +40,7 @@ class InvoiceServiceProductImpl implements InvoiceProductService
             return false;
         }
 
-        $invoiceProduct->delete();
-        return true;
+        return $invoiceProduct->delete();
     }
 }
+

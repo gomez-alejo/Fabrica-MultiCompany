@@ -9,7 +9,7 @@ class ProductRequestServiceImpl implements ProductRequestService
 {
     public function all()
     {
-        return ProductRequest::with(['requestt', 'product', 'warehouse'])->get();
+        return ProductRequest::included()->filter()->get();
     }
 
     public function show($id)
