@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Impl\BranchServiceImpl;
-use App\Services\BranchService;
+use App\Services\CompanyService;
+use App\Services\Impl\CompanyServiceImpl;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(BranchService::class, BranchServiceImpl::class);
+        $this->app->bind(CompanyService::class, CompanyServiceImpl::class);
     }
 
     /**
@@ -21,6 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        
+        //
     }
 }
