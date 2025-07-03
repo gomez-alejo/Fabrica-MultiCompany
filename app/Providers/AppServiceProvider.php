@@ -13,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //$this->app->bind(StockController::class, StockServiceImpl::class);
+        $this->app->bind(
+            \App\Services\StockService::class,
+            \App\Services\impl\StockServiceImpl::class
+        );
     }
 
     /**
