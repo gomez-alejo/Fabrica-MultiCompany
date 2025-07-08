@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id(); // id INT(11)
             $table->string('username', 250);     // usuario
             $table->string('name', 250);         // nombres
+            $table->string('email', 250)->unique(); 
             $table->string('password', 64);      // contrasena
             $table->unsignedBigInteger('company_id'); // id_empresa
             // Foreign key constraint

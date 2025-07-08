@@ -13,7 +13,8 @@ class UserFactory extends Factory
         return [
             'username' => $this->faker->unique()->userName(),
             'name' => $this->faker->name(),
-            'password' => Hash::make('password123'), // Default password
+            'email' => $this->faker->unique()->safeEmail(), //  Aquí se agrega el email
+            'password' => Hash::make('password123'), // Contraseña por defecto
             'company_id' => Company::inRandomOrder()->first()?->id ?? Company::factory(),
         ];
     }
