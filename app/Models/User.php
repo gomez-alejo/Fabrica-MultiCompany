@@ -123,7 +123,7 @@ class User extends Authenticatable implements JWTSubject
                 $query->orderBy($sortField, $direction); //ejecutamos la query con la direccion deseada sea 'asc' o 'desc'
             }
         }
-        //http://api.blog.test/v1/categories?sort=name
+        
     }
 
     public function scopeGetOrPaginate(Builder $query)
@@ -136,7 +136,7 @@ class User extends Authenticatable implements JWTSubject
             }
         }
         return $query->get(); //sino se pasa el valor de $perPage en la URL se pasan todos los registros.
-        //http://api.codersfree1.test/v1/categories?perPage=2
+        
     }
 }
 
