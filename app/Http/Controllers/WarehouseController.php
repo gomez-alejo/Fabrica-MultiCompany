@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreWarehouseRequest;
+use App\Http\Requests\UpdateWarehouseRequest;
 use App\Models\Warehouse;
+use App\Services\WarehouseService;
 use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
@@ -10,9 +13,15 @@ class WarehouseController extends Controller
     /**
      * Display a listing of the resource.
      */
+    protected $warehouseService;
+    public function __construct(WarehouseService $warehouseService)
+    {
+        $this->warehouseService = $warehouseService;
+    }
     public function index()
     {
-        //
+        $warehouses = $this->warehouseService->all();
+        return response()->json($warehouses);
     }
 
     /**
@@ -20,15 +29,20 @@ class WarehouseController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreWarehouseRequest $request)
     {
-        //
+
+        $warehouse = $this->warehouseService->create($request->validated());
+        return response()->json([
+            'message' => 'La bodega ha sido creada exitosamente.',
+            'warehouse' => $warehouse
+        ], 201);
     }
 
     /**
@@ -36,7 +50,12 @@ class WarehouseController extends Controller
      */
     public function show(Warehouse $warehouse)
     {
-        //
+        $warehouse = $this->warehouseService->show($warehouse->id);
+
+        if (!$warehouse) {
+            return response()->json(['message' => 'La bodega no fue encontrada'], 404);
+        }
+        return response()->json($warehouse);
     }
 
     /**
@@ -44,15 +63,25 @@ class WarehouseController extends Controller
      */
     public function edit(Warehouse $warehouse)
     {
-        //
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Warehouse $warehouse)
+    public function update(UpdateWarehouseRequest $request, Warehouse $warehouse)
     {
-        //
+
+        $updatedWarehouse = $this->warehouseService->update($warehouse->id, $request->validated());
+
+        if (!$updatedWarehouse) {
+            return response()->json(['message' => 'La bodega no fue encontrada'], 404);
+        }
+
+        return response()->json([
+            'message' => 'La bodega ha sido actualizada exitosamente.',
+            'warehouse' => $updatedWarehouse
+        ]);
     }
 
     /**
@@ -60,6 +89,12 @@ class WarehouseController extends Controller
      */
     public function destroy(Warehouse $warehouse)
     {
-        //
+        $deleted = $this->warehouseService->delete($warehouse->id);
+
+        if (!$deleted) {
+            return response()->json(['message' => 'La bodega no fue encontrada'], 404);
+        }
+
+        return response()->json(['message' => 'La bodega ha sido eliminada.']);
     }
 }
