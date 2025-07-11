@@ -22,25 +22,34 @@ class Warehouse extends Model
 
     //no sabia que datos poner exactamente a falta de una docuemntacion clara, sorry puse los que tenian sentido
     protected $allowedFilter = ['name', 'city', 'company_id'];
-    protected $allowedIncluded = ['company', 'stocks', 'invoiceProducts', 'requests','stocks.product'];
-    protected $allowedSort = ['name', 'city','id'];
+    protected $allowedIncluded = [
+        'company',
+        'stocks',
+        'stocks.product',
+        'invoiceProducts',
+        'invoiceProducts.invoice',
+        'productRequests',
+        'productRequests.product'
+    ];
+    protected $allowedSort = ['name', 'city', 'id'];
 
 
-    public function company()  {
+    public function company()
+    {
         return $this->belongsTo(Company::class);
     }
-    public function stocks()  {
+    public function stocks()
+    {
         return $this->hasMany(Stock::class);
     }
-    public function invoiceProducts()  {
+    public function invoiceProducts()
+    {
         return $this->hasMany(InvoiceProduct::class);
     }
-    public function requests()  {
-        return $this->belongsToMany(Requestt::class, 'product_request', 'warehouse_id', 'request_id');
+    public function productRequests()
+    {
+        return $this->hasMany(ProductRequest::class);
     }
-
-    //aun dudo de esta realcion, toco esperificar el nombre de la tabla intermedia
-
 
     public function scopeIncluded(Builder $query)
     {
@@ -50,7 +59,7 @@ class Warehouse extends Model
 
         $relations = explode(',', request('included'));
 
-        $allowedIncluded = collect( $this->allowedIncluded);
+        $allowedIncluded = collect($this->allowedIncluded);
 
         foreach ($relations as $key => $relation) {
             if (!$allowedIncluded->contains($relation)) {
@@ -59,7 +68,6 @@ class Warehouse extends Model
         }
 
         $query->with($relations);
-
     }
 
     public function scopeFilter(Builder $query)
@@ -80,10 +88,9 @@ class Warehouse extends Model
                 $query->where($filter, 'LIKE', '%' . $value . '%');
             }
         }
-
     }
 
-     public function scopeSort(Builder $query)
+    public function scopeSort(Builder $query)
     {
 
         if (empty($this->allowedSort) || empty(request('sort'))) {
@@ -105,7 +112,6 @@ class Warehouse extends Model
                 $query->orderBy($sortField, $direction); //ejecutamos la query con la direccion deseada sea 'asc' o 'desc'
             }
         }
-
     }
 
     public function scopeGetOrPaginate(Builder $query)
