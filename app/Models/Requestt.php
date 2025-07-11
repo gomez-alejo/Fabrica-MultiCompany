@@ -19,6 +19,35 @@ class Requestt extends Model
         'products_json',
     ];
 
+        //LISTAS BLANCAS
+    protected $allowIncluded = [
+        'user',
+        'person',
+        'company'
+    ];
+
+    //protected $allowFilter = ['id']; //Preguntar a dan
+    //protected $allowSort = ['id', 'name', 'unit_price', 'min_stock'];
+
+    public function scopeIncluded(Builder $query)
+    {
+        if (empty($this->allowIncluded) || empty(request('included'))) {
+            return;
+        }
+        
+        $relations = explode(',', request('included'));
+        $allowedIncluded = collect( $this->allowedIncluded);
+
+        foreach ($relations as $key => $relation) {
+            if (!$allowedIncluded->contains($relation)) {
+                unset($relations[$key]);
+            }
+        }
+
+        $query->with($relations);
+
+    }
+
     protected $casts = [
         'products_json' => 'array',
     ];
