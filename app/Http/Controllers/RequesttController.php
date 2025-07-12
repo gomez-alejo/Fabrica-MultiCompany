@@ -21,7 +21,7 @@ class RequesttController extends Controller
      */
     public function index(Request $request)
     {
-        $list = $this->requesttService->index($request->all());
+        $list = $this->requesttService->all($request->all());
         return response()->json([
             'data'    => $list,
             'message' => 'Listado de solicitudes obtenido correctamente.'
@@ -42,9 +42,16 @@ class RequesttController extends Controller
     // El servicio de store ya llama a create en RequesttService
     public function store(Request $request)
     {
-        $requestt = $this->requesttService->store($request->validate([
+        $requestt = $this->requesttService->store($request->validate(
+            [
             // Todavía no sé qué reglas usaran xd
-        ]));
+            'company_id' => 'required|exists:companies,id',
+            'user_id' => 'required|exists:user,id',
+            'person_id' => 'required|exists:user,id',
+            'status' => 'required|string|max:50',
+            'products_json' => 'required|longtext'
+            ]
+        ));
 
         return response()->json([
             'data'    => $requestt,
@@ -78,9 +85,12 @@ class RequesttController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $requestt = $this->requesttService->update($id, $request->validate([
+        $requestt = $this->requesttService->update($id, $request->validate(
+            [
             // Todavía no sé qué reglas usaran xd
-        ]));
+            'status' => 'required|string|max:50'
+        ]
+    ));
 
         return response()->json([
             'data'    => $requestt,

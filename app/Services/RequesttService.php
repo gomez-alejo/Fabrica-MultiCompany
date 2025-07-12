@@ -6,7 +6,7 @@ use App\Models\Requestt;
 interface RequesttService
 {
     //
-    public function index();
+    public function all(array $params = []);
 
     public function show(int $id): Requestt;
 

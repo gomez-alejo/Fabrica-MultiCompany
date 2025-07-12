@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Requestt extends Model
@@ -19,34 +20,15 @@ class Requestt extends Model
         'products_json',
     ];
 
-        //LISTAS BLANCAS
+    //LISTAS BLANCAS
     protected $allowIncluded = [
         'user',
         'person',
         'company'
     ];
-
-    //protected $allowFilter = ['id']; //Preguntar a dan
-    //protected $allowSort = ['id', 'name', 'unit_price', 'min_stock'];
-
-    public function scopeIncluded(Builder $query)
-    {
-        if (empty($this->allowIncluded) || empty(request('included'))) {
-            return;
-        }
-        
-        $relations = explode(',', request('included'));
-        $allowedIncluded = collect( $this->allowedIncluded);
-
-        foreach ($relations as $key => $relation) {
-            if (!$allowedIncluded->contains($relation)) {
-                unset($relations[$key]);
-            }
-        }
-
-        $query->with($relations);
-
-    }
+        //Sujetos a cambios
+    protected $allowFilter = ['id', 'company', 'status']; 
+    protected $allowSort = ['id', 'company', 'status'];
 
     protected $casts = [
         'products_json' => 'array',
@@ -71,4 +53,47 @@ class Requestt extends Model
     {
         return $this->hasMany(ProductRequest::class);
     }
+
+    public function scopeIncluded(Builder $query, $relations = null)
+    {
+    if (!$relations) return $query;
+
+    $relationsArray = explode(',', $relations);
+
+    $allowed = array_intersect($relationsArray, $this->allowIncluded);
+
+    return $query->with($allowed);
+    }
+
+    public function scopeFilter(Builder $query, $filters = [])
+    {
+    if (!is_array($filters)) return $query;
+
+    foreach ($filters as $field => $value) {
+        if (in_array($field, $this->allowFilter) && $value !== null) {
+            $query->where($field, $value);
+        }
+    }
+
+    return $query;
+    }
+
+    public function scopeSort(Builder $query, $sort = null)
+    {
+    if (!$sort) return $query;
+
+    foreach (explode(',', $sort) as $column) {
+        $direction = 'asc';
+        if (str_starts_with($column, '-')) {
+            $direction = 'desc';
+            $column = ltrim($column, '-');
+        }
+
+        if (in_array($column, $this->allowSort)) {
+            $query->orderBy($column, $direction);
+        }
+    }
+
+    return $query;
+    }    
 }

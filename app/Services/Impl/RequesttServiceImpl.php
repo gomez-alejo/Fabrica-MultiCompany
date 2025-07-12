@@ -8,16 +8,15 @@ use App\Models\Requestt;
 class RequesttServiceImpl implements RequesttService
 {
 
-    public function index()
+    public function all(array $params = [])
     {
-        return Requestt::all();
-        //Posibles cambios en el MR 
-   /*          ->included()
-            ->filter()
-            ->sort()
-            ->paginate(); */
+        return Requestt::query()
+        ->included($params['include'] ?? null)
+        ->filter($params['filter'] ?? [])
+        ->sort($params['sort'] ?? null)
+        ->paginate($params['per_page'] ?? 15);
     }
-
+    
     public function show(int $id): Requestt
     {
         return Requestt::findOrFail($id);
