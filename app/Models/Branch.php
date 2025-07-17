@@ -59,4 +59,19 @@ class Branch extends Model
 
         return $query;
     }
+
+        public function scopeSort($query, $sortField = 'id', $sortDirection = 'asc')
+    {
+        // Lista blanca de campos permitidos para ordenar
+        $allowedSorts = ['id', 'name', 'company_id', 'created_at'];
+
+        // Si el campo no está permitido, no se aplica el ordenamiento
+        if (!in_array($sortField, $allowedSorts)) {
+            return $query;
+        }
+
+        // Aplica el ordenamiento
+        return $query->orderBy($sortField, $sortDirection);
+    }
+
 }
