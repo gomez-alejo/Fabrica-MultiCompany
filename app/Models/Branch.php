@@ -34,7 +34,7 @@ class Branch extends Model
     protected static $allowedIncludes = ['company', 'invoices'];
 
     // Scope: incluir relaciones validadas
-    public function scopeInclude($query, array $relations = [])
+    public function scopeInclude($query, array $relations = ['company'])
     {
         $validRelations = array_intersect($relations, self::$allowedIncludes);
         return $query->with($validRelations);

@@ -15,14 +15,23 @@ class BranchServiceImpl implements BranchService
     // Método para obtener todas las sucursales con filtros y relaciones
     public function getAll(Request $request)
     {
-        $filters = $request->only(['name', 'company_id']);
+        $filterDirect = $request->only(['name', 'company_id']);
+        $filterNested = $request->input('filter', []);
+        $filters = array_merge($filterDirect, $filterNested);
 
         $includes = is_array($request->include)
             ? $request->include
             : explode(',', $request->input('include', ''));
         
-        $sortField = $request->input('sort_by', 'id');
-        $sortDirection = $request->input('order', 'asc');
+    $sortParam = $request->input('sort', 'id'); // Solo un parámetro 'sort'
+
+    $sortDirection = 'asc';
+    $sortField = $sortParam;
+
+    if (str_starts_with($sortParam, '-')) {
+        $sortDirection = 'desc';
+        $sortField = ltrim($sortParam, '-');
+    }
 
         return Branch::include($includes)
                     ->filter($filters)
@@ -33,9 +42,10 @@ class BranchServiceImpl implements BranchService
     // Método para encontrar una sucursal por su ID
     public function findById($id, Request $request)
     {
+        
         $includes = is_array($request->include)
             ? $request->include
-            : explode(',', $request->input('include', 'company'));
+            : explode(',', $request->input('include', '')); 
 
         return Branch::query()
                     ->include($includes)
